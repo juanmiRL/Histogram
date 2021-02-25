@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>d3.js Dynamic HMTML Table</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-flat.css">
+<body>
+
+<div class="w3-container w3-flat-midnight-blue" align="center">
+<h1>Juan Miguel Rodríguez Lago</h1>
+<h3 class="w3-opacity">Data Tidying and Reporting</h3>
+<h3 class="w3-opacity"> Master in Statistics for Data Science</h3>
+25th February 2021
+</div>
+        </style>
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css">
+        <script src="./d3.v6.min.js"></script>
+        <style>
+
+body {
+          color: rgb(10, 8, 8);
+          font-size: 14px;
+          line-height: 24px;
+          background-color: lightgrey;
+        }
+       
+        h2 {
+          color: rgb(28, 84, 204);
+          margin-left: 19px;
+          font-size: 34px;
+          font-family: verdana;
+        }
+     
+        p {
+          font-size: 13px;
+          line-height: 24px;
+          margin-left: 19px;
+        }
+        table{
+         border: 1px solid rgb(133, 132, 132);
+         width: 50%;
+         background-color: rgb(250, 244, 244); 
+        }
+        td{
+            border-bottom: 1px solid rgb(129, 128, 128);
+            border-right:1px solid rgb(129, 128, 128) ;
+        }
+
+        th {
+            background-color: rgb(28, 84, 204);
+            color: white;
+        }
+        tr:hover {background-color: #75b4fc;}
+        
+        #myCanvas{
+            background-color: rgb(152, 186, 250);
+        }
+               
+      </style>
+              <meta charset="utf-8">
+    </head>
+
+    <body align="center">
+        
+        <br>
+        <br>
+        <h2>Task 5:  Plot the selected column or all columns together </h2>
+        <hr style="color: blue;" ></hr>
+        <br>
+        In this web page you can see the category-brands.csv, note that when you click on the row in the table below the bas in the graph is highlighted in a different color. <br>
+        Note also that the data is shown in decreasing order. It is necessary that you type the number of brands to be displayed , as well as choose a year among those available for the data to be displayed in the table and in the graphs.
+        <br> 
+        <br>
+        <br>
+        <div style="color:blue">Please introduce the number of brands:<input id="brands" type="number" size="3"> </input></div>
+        <br>
+        <div id="dateSelector" style="color: blue;">Select Year:</div>
+        <br>
+        <br>
+        <svg id="myCanvas" style="width:100%;height:350px;"> </svg>
+        <br>
+        <br>
+        <table align="center">
+            <thead></thead>
+            <tbody></tbody>
+        </table>
+
+        <script>
+            
+             csv = false ? "data.csv" : "https://raw.githubusercontent.com/juanmiRL/Highlight-the-given-column/main/category_brands.csv";
+            
+        
+        </script>
+         
+       
+        
+        
+    </body>
+
+</html>      
