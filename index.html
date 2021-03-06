@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Histogram</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-flat.css">
+<body>
+
+<div class="w3-container w3-flat-midnight-blue" align="center">
+<h1>Juan Miguel Rodríguez Lago</h1>
+<h3 class="w3-opacity">Data Tidying and Reporting</h3>
+<h3 class="w3-opacity"> Master in Statistics for Data Science</h3>
+25th February 2021
+</div>
+        </style>
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css">
+        <script src="./d3.v6.min.js"></script>
+        <style>
+
+body {
+          color: rgb(10, 8, 8);
+          font-size: 14px;
+          line-height: 24px;
+          background-color: lightgrey;
+        }
+       
+        h2 {
+          color: rgb(28, 84, 204);
+          margin-left: 19px;
+          font-size: 34px;
+          font-family: verdana;
+        }
+     
+        p {
+          font-size: 13px;
+          line-height: 24px;
+          margin-left: 19px;
+        }
+        table{
+         border: 1px solid rgb(133, 132, 132);
+         width: 50%;
+         background-color: rgb(250, 244, 244);
+         overflow: hidden;
+          
+        }
+        td,th{
+            border-bottom: 1px solid rgb(129, 128, 128);
+            border-right:1px solid rgb(129, 128, 128) ;
+            position: relative;
+            padding: 10px;
+        }
+
+        th {
+            background-color: rgb(28, 84, 204);
+            color: white;
+        }
+        
+        td.selectable:hover::after { 
+                background-color: rgb(28, 84, 204);
+                content: '';  
+                height: 10000px;    
+                left: 0;
+                position: absolute;  
+                top: -5000px;
+                width: 100%;
+                z-index: -1;        
+            }
+        
+        #myCanvas{
+            background-color: rgb(240, 241, 243);
+        }
+        label{color: rgb(28, 84, 204);}
+
+      </style>
+              <meta charset="utf-8">
+    </head>
+
+    <body align="center">
+        
+        <br>
+        <br>
+        <h2>Task 5:  Plot the selected column or all columns together </h2>
+        <hr style="color: blue;" ></hr>
+        <br>
+        On this web page you can select a column from the table shown below by clicking on a column in it.
+        <br> 
+        Once you click on a column, a histogram will appear below, in which the x-axis is the interval and the y-axis corresponds to the selected column. 
+        <br>
+        You have the option of displaying all the columns at once (grouped histogram) by checking the option in the checkbox shown below.
+        <br>
+        <br>
+        <table align="center" id="table">
+            <thead></thead>
+            <tbody></tbody>
+        </table>
+        <br> 
+        <p>
+            <input type="checkbox" id="Hist" name="Hist" value="true" onchange="r(this)">
+            <label for="Hist">Multiple Histogram </label>
+        </p>
+        <br>
+        <svg id="myCanvas" style="width:100%;height:350px;">
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+        </svg>
+
+        <script>
+            
+             histogram = false ? "histogram.csv" : "https://raw.githubusercontent.com/juanmiRL/Histogram/main/histogram.csv";
+
+             d3.csv(histogram).then(tidying);
+
+             var t,e;
+
+             function tidying(data){
+                 t=data;
+                 e=data.columns;
+                 a();
+                 c(t)}
+
+             function a(){
+                 d3.select("table thead")
+                 .selectAll("tr").remove();
+                 d3.select("table thead")
+                 .append("tr")
+                 .selectAll("th")
+                 .data(e)
+                 .join("th").text(t=>t)}
+
+             function c(t){
+                 d3.select("table tbody")
+                 .selectAll("tr")
+                 .data(t).join("tr")
+                 .selectAll("td")
+                 .data(t=>Object.entries(t))
+                 .join("td")
+                 .text(t=>t[1])
+                 .attr("data-col",t=>t[0])
+                 .classed("selectable",t=>"x"!=t[0])
+                 .on("click",(t,e)=>{if("x"!=e[0])i(e[0])})}
+             
+            function i(e){
+                 svg=d3.select("#myCanvas");
+                 w=svg.node().width.baseVal.value;
+                 h=svg.node().height.baseVal.value;
+                 max_y=d3.reduce(t,(t,data)=>Math.max(t,data[e]),0);
+                 min_y=d3.reduce(t,(t,data)=>Math.min(t,data[e]),0);
+                 x=d3.scaleLinear([0,t.length],[0,w]);
+                 y=d3.scaleLinear([min_y-20,max_y],[h,0]);
+                 svgBind=svg.text("").selectAll("rect").data(t);
+                 svgBind.enter()
+                 .append("rect")
+                 .attr("x",(t,e)=>x(e))
+                 .attr("y",t=>y(Math.max(t[e],0)))
+                 .attr("height",t=>Math.abs(y(t[e])-y(0)))
+                 .attr("width",.95*x(1))
+                 .style("fill",t=>t[e]>0?"darkblue":"red");
+                 svgBind.enter().append("text")
+                 .attr("x",(t,e)=>x(e+.5))
+                 .attr("y",y(min_y-10))
+                 .attr("text-anchor","middle")
+                 .text(t=>t["x"])}
+            
+                 function l(){
+                     d3.select("#myCanvas")
+                     .text("")}
+
+                 function d(){svg=d3.select("#myCanvas");
+                 w=svg.node().width.baseVal.value;
+                 h=svg.node().height.baseVal.value;
+                 max_y=d3.reduce(t,(t,e)=>Math.max(t,e["data1"]),0);
+                 min_y=d3.reduce(t,(t,e)=>Math.min(t,e["data3"]),0);
+                 x=d3.scaleLinear([0,t.length],[0,w]);
+                 y=d3.scaleLinear([min_y-20,max_y],[h,0]);
+                 color=d3.scaleOrdinal(e,d3.schemeTableau10);
+                 svgBind=svg.text("")
+                 .selectAll("g")
+                 .data(t).join("g")
+                 .attr("transform",(t,e)=>`translate(${x(e)},0)`);
+                 var n;
+                 var a;
+                 svgBind.selectAll("rect")
+                 .data(t=>Object.entries(t).slice(-3))
+                 .join("rect")
+                 .attr("x",(t,e)=>e*x(1)/3*.95)
+                 .attr("y",t=>y(Math.max(t[1],0)))
+                 .attr("height",t=>Math.abs(y(t[1])-y(0)))
+                 .attr("width",x(1)/3*.95)
+                 .style("fill",t=>color(t[0]));
+                 svgBind.append("text")
+                 .attr("x",(t,e)=>x(.5))
+                 .attr("y",y(min_y-10))
+                 .attr("text-anchor","middle")
+                 .text(t=>t["x"])}
+
+                 var s=false;
+                 
+                 function r(t){
+                     s=t.checked;
+                     c();
+                     s?d():l()}
+
+           
+        </script>
+         
+       
+        
+        
+    </body>
+
+</html>      
