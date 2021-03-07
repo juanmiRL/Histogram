@@ -51,6 +51,7 @@ body {
             border-right:1px solid rgb(129, 128, 128) ;
             position: relative;
             padding: 10px;
+            cursor: pointer;
         }
 
         th {
@@ -58,15 +59,9 @@ body {
             color: white;
         }
         
-        td.selectable:hover::after { 
+        td:hover { 
                 background-color: rgb(28, 84, 204);
-                content: '';  
-                height: 10000px;    
-                left: 0;
-                position: absolute;  
-                top: -5000px;
-                width: 100%;
-                z-index: -1;        
+                       
             }
         
         #myCanvas{
@@ -82,14 +77,14 @@ body {
         
         <br>
         <br>
-        <h2>Task 5:  Plot the selected column or all columns together </h2>
+        <h2>Task 5:  Plot the selected column </h2>
         <hr style="color: blue;" ></hr>
         <br>
         On this web page you can select a column from the table shown below by clicking on a column in it.
         <br> 
-        Once you click on a column, a histogram will appear below, in which the x-axis is the interval and the y-axis corresponds to the selected column. 
+        Once you click on cell in a data column, a histogram will appear below, in which the x-axis is the interval and the y-axis corresponds to the selected column. 
         <br>
-        You have the option of displaying all the columns at once (grouped histogram) by checking the option in the checkbox shown below.
+        
         <br>
         <br>
         <table align="center" id="table">
@@ -97,10 +92,7 @@ body {
             <tbody></tbody>
         </table>
         <br> 
-        <p>
-            <input type="checkbox" id="Hist" name="Hist" value="true" onchange="r(this)">
-            <label for="Hist">Multiple Histogram </label>
-        </p>
+        
         <br>
         <svg id="myCanvas" style="width:100%;height:350px;">
             <g></g>
